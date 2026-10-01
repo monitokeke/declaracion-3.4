@@ -19,10 +19,9 @@
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             text-align: center;
-            perspective: 1200px;
         }
 
-        /* ESCENOGRAFÍA DE FONDO */
+        /* CAPA INVISIBLE DETRÁS DE TODO */
         .paisaje-fondo {
             position: absolute;
             bottom: 0;
@@ -34,64 +33,38 @@
             z-index: 1;
         }
 
-        .nube {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 30px;
-            animation: flotarNube 25s linear infinite;
-            z-index: 1;
-        }
-        .nube1 { width: 120px; height: 40px; top: 15%; left: -150px; }
-        .nube2 { width: 180px; height: 50px; top: 30%; left: -200px; animation-delay: 8s; }
-
-        @keyframes flotarNube {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(100vw + 350px)); }
-        }
-
-        /* TARJETA PRINCIPAL CRISTAL 3D */
+        /* CONTENEDOR 3D FLOTANTE DELANTE */
         .contenedor-3d {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.65);
             padding: 40px 30px;
             border-radius: 30px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1), inset 0 4px 10px rgba(255, 255, 255, 0.4);
-            z-index: 10;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            z-index: 100; /* Forzado al frente de todo */
             max-width: 85%;
             width: 380px;
-            transform: rotateX(8deg) rotateY(-4deg);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-sizing: border-box;
-        }
-
-        .contenedor-3d:hover {
-            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+            position: relative;
         }
 
         .avatar-3d {
             width: 120px;
             height: 120px;
             margin: 0 auto 25px auto;
-            animation: balanceo 3s infinite ease-in-out;
-        }
-
-        @keyframes balanceo {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
         h1, h2 {
             font-family: 'Fredoka One', cursive;
-            color: #ffffff;
-            text-shadow: 0 4px 10px rgba(216, 17, 89, 0.4);
+            color: #ff4d6d;
             margin: 0 0 25px 0;
         }
 
         h1 { font-size: 30px; }
-        h2 { font-size: 24px; color: #ff4d6d; text-shadow: none; }
+        h2 { font-size: 24px; }
 
+        /* CONTENEDOR DE BOTONES SEGURO */
         .botones-container {
             display: flex;
             justify-content: center;
@@ -101,7 +74,7 @@
             min-height: 80px;
             position: relative;
             width: 100%;
-            z-index: 20; /* Asegura los botones al frente */
+            z-index: 200; /* Forzado por encima del contenedor */
         }
 
         button {
@@ -111,7 +84,6 @@
             cursor: pointer;
             border: none;
             border-radius: 20px;
-            transition: all 0.15s ease;
             text-transform: uppercase;
             box-sizing: border-box;
             display: inline-block;
@@ -120,37 +92,21 @@
         #si, .btn-siguiente {
             background: #2ec4b6;
             color: white;
-            box-shadow: 0 8px 0 #1fa396, 0 15px 20px rgba(0,0,0,0.15);
-        }
-
-        #si:hover, .btn-siguiente:hover {
-            background: #33d6c7;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 0 #1fa396, 0 18px 25px rgba(0,0,0,0.2);
-        }
-
-        #si:active, .btn-siguiente:active {
-            transform: translateY(6px);
-            box-shadow: 0 2px 0 #1fa396, 0 5px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 0 #1fa396;
         }
 
         #no {
             background: #e63946;
             color: white;
-            box-shadow: 0 8px 0 #b81d2a, 0 15px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 0 #b81d2a;
             position: relative;
+            z-index: 250;
         }
 
         .pantalla-sorpresa {
             display: none;
             flex-direction: column;
             align-items: center;
-            animation: aparicionFina 0.6s forwards ease-out;
-        }
-
-        @keyframes aparicionFina {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .texto-romantico {
@@ -158,49 +114,49 @@
             color: #4a4a4a;
             line-height: 1.6;
             margin-bottom: 25px;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.8);
             padding: 15px;
             border-radius: 15px;
         }
 
+        /* EFECTOS DE LLUVIA TRANSPARENTE FANTASMA */
         .particula-3d {
             position: absolute;
             top: -50px;
-            pointer-events: none; /* TRUCO CRÍTICO: Hace que los corazones ignoren los clics */
+            pointer-events: none; /* No absorbe clics */
             animation: caer3d linear forwards;
-            opacity: 0.8;
+            opacity: 0.6;
+            z-index: 5; /* Detrás de la tarjeta principal */
         }
 
         @keyframes caer3d {
-            0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translateY(110vh) rotate(360deg) scale(1.2); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="paisaje-fondo"></div>
-    <div class="nube nube1"></div>
-    <div class="nube nube2"></div>
 
     <script>
         function crearLluviaDecorativa() {
             const part = document.createElement('div');
             part.classList.add('particula-3d');
-            const items = ['❤️', '✨', '🌸', '🎈'];
+            const items = ['❤️', '✨', '🌸'];
             part.innerText = items[Math.floor(Math.random() * items.length)];
             part.style.left = Math.random() * 100 + 'vw';
-            part.style.zIndex = Math.random() > 0.5 ? 25 : 2;
             part.style.fontSize = Math.random() * 20 + 15 + 'px';
             part.style.animationDuration = Math.random() * 4 + 4 + 's';
             document.body.appendChild(part);
             setTimeout(() => { part.remove(); }, 8000);
         }
-        setInterval(crearLluviaDecorativa, 250);
+        setInterval(crearLluviaDecorativa, 300);
     </script>
 
     <div class="contenedor-3d">
+        <!-- Bloque Principal de Decisión -->
         <div id="pantalla-inicio">
             <div class="avatar-3d">
                 <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
@@ -220,6 +176,7 @@
             </div>
         </div>
 
+        <!-- Paso 1 -->
         <div id="paso1" class="pantalla-sorpresa">
             <h2>¿De verdad? 🥺</h2>
             <div class="texto-romantico">
@@ -228,6 +185,7 @@
             <button class="btn-siguiente" onclick="avanzarPaso(2)">Continuar ✨</button>
         </div>
 
+        <!-- Paso 2 -->
         <div id="paso2" class="pantalla-sorpresa">
             <h2>Una cosita más... 💖</h2>
             <div class="texto-romantico">
@@ -236,14 +194,15 @@
             <button class="btn-siguiente" onclick="avanzarPaso(3)">Ver sorpresa 🎁</button>
         </div>
 
+        <!-- Pantalla Final Exitosa -->
         <div id="pantalla-final" class="pantalla-sorpresa">
             <h2>¡Siii! Sabía que dirías que sí 🥰</h2>
-            <div class="avatar-3d" style="animation: balanceo 1s infinite alternate ease-in-out;">
+            <div class="avatar-3d">
                 <svg viewBox="0 0 24 24" style="width:100%; height:100%;">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e63946"/>
                 </svg>
             </div>
-            <div class="texto-romantico" style="font-weight: bold; color: #ff4d6d;">
+            <div class="texto-romantico" style="font-weight: bold; color: #ff4d6d; background: white;">
                 ¡Oficialmente somos novios! Te amo con todo mi corazón. 👩‍❤️‍👨
             </div>
         </div>
@@ -267,12 +226,16 @@
             document.getElementById('paso1').style.display = 'none';
             document.getElementById('paso2').style.display = 'none';
             document.getElementById('pantalla-final').style.display = 'none';
-if(paso === 1) {
-            document.getElementById('paso1').style.display = 'flex';
-} else if(paso === 2) {
-            document.getElementById('paso2').style.display = 'flex';
-} else if(paso === 3) {
-            document.getElementById('pantalla-final').style.display = 'flex';
-setInterval(crearLluviaDecorativa, 40);
-}
-}
+
+            if(paso === 1) {
+                document.getElementById('paso1').style.display = 'flex';
+            } else if(paso === 2) {
+                document.getElementById('paso2').style.display = 'flex';
+            } else if(paso === 3) {
+                document.getElementById('pantalla-final').style.display = 'flex';
+                setInterval(crearLluviaDecorativa, 50);
+            }
+        }
+    </script>
+</body>
+</html>
